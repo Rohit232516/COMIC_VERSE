@@ -8,6 +8,14 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 export const formatCurrency = (value) =>
   currencyFormatter.format(Number(value));
 
+// Helper function to get image path with base URL for GitHub Pages
+export const getImagePath = (path) => {
+  // Remove leading slash if present, then add base URL
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  return `${baseUrl}${cleanPath}`;
+};
+
 export const renderComics = (container, comics) => {
   if (!container) return;
   if (!comics.length) {
@@ -21,7 +29,7 @@ export const createComicCard = (comic) => {
   const detailUrl = `comic-detail.html?id=${encodeURIComponent(comic.id)}`;
   return `
     <article class="card-comic">
-      <img src="${comic.coverImg}" alt="Cover for ${comic.title}" loading="lazy" />
+      <img src="${getImagePath(comic.coverImg)}" alt="Cover for ${comic.title}" loading="lazy" />
       <div class="card-body">
         <p class="badge">${comic.publisher}</p>
         <h3>${comic.title}</h3>
